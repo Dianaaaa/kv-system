@@ -6,6 +6,7 @@ import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -16,7 +17,6 @@ import static com.kvstore.node.watcher.ZKConnectionWatcher.countDownLatch;
 
 public class Node {
     static ZooKeeper zooKeeper;
-    static String bindPath = "rmi://172.20.10.2:1099/kvNode";
 
     public static void addNodeNum() {
         try {
@@ -30,6 +30,10 @@ public class Node {
             byte[] paths = zooKeeper.getData("/config/nodeService", false, stat);
             String pathsStr = new String(paths);
             String newPaths;
+
+            InetAddress ia = InetAddress.getLocalHost();
+            String IP= ia.getHostAddress();//获取计算机IP
+            String bindPath = "rmi://"+IP+":1099/kvNode";
 
             if (num == 1) {
                 newPaths = bindPath;
