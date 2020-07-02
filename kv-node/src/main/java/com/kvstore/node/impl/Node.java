@@ -75,7 +75,7 @@ public class Node {
             System.out.println("======= node启动RMI服务成功! =======");
 
             //update zookeeper data node
-            zooKeeper = new ZooKeeper("127.0.0.1:2181", 500, new ZKConnectionWatcher());
+            zooKeeper = new ZooKeeper("172.20.10.4:2181", 500, new ZKConnectionWatcher());
             countDownLatch.await();
             System.out.println(zooKeeper.getSessionId());
 

@@ -21,7 +21,7 @@ public class ZKConnectionWatcher implements Watcher {
                             System.out.println("connect failed");
                         } else if (watchedEvent.getState() == Event.KeeperState.Expired) {
                             System.out.println("time out");
-                            zooKeeper = new ZooKeeper("127.0.0.1:2181", 5000, new ZKConnectionWatcher());
+                            zooKeeper = new ZooKeeper("172.20.10.4:2181", 5000, new ZKConnectionWatcher());
                         } else if (watchedEvent.getState() == Event.KeeperState.AuthFailed) {
                             System.out.println("auth failed");
                         }
