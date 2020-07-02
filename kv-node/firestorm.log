@@ -1,0 +1,67 @@
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:zookeeper.version=3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:host.name=ubuntu
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.version=1.8.0_252
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.vendor=Private Build
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.home=/usr/lib/jvm/java-8-openjdk-amd64/jre
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.class.path=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/icedtea-sound.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/java-atk-wrapper.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/sunec.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/management-agent.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar:/home/hadoop/Downloads/kv-system/kv-node/target/classes:/home/hadoop/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/home/hadoop/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/hadoop/.m2/repository/org/slf4j/slf4j-log4j12/1.7.25/slf4j-log4j12-1.7.25.jar:/home/hadoop/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/home/hadoop/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/hadoop/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/home/hadoop/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/home/hadoop/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/home/hadoop/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/opt/idea-IC-201.7223.91/lib/idea_rt.jar
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.io.tmpdir=/tmp
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.compiler=<NA>
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.name=Linux
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.arch=amd64
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.version=5.0.0-23-generic
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.name=hadoop
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.home=/home/hadoop
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.dir=/home/hadoop/Downloads/kv-system/kv-node
+INFO main org.apache.zookeeper.ZooKeeper - Initiating client connection, connectString=127.0.0.1:2182 sessionTimeout=5000 watcher=com.kvstore.node.impl.NodeServiceImpl$1@7637f22
+DEBUG main org.apache.zookeeper.ClientCnxn - zookeeper.disableAutoWatchReset is false
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2182. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2182, initiating session
+DEBUG main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2182
+INFO main-SendThread(localhost:2182) org.apache.zookeeper.ClientCnxn - Unable to read additional data from server sessionid 0x0, likely server has closed socket, closing socket connection and attempting reconnect

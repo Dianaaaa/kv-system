@@ -1,11 +1,15 @@
 package com.kvstore.node.impl;
 
 import com.kvstore.node.NodeService;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooKeeper;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class NodeServiceImpl extends UnicastRemoteObject implements NodeService {
     Map store;
@@ -15,6 +19,7 @@ public class NodeServiceImpl extends UnicastRemoteObject implements NodeService 
     }
 
     public void init(Map initValues) throws RemoteException {
+        System.out.println("init node: "+ initValues.toString());
         store = new HashMap(initValues);
     }
 
