@@ -20,7 +20,9 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
 
     Map kvs;
     public String[] rmiPaths;
-    public Integer nodeNum = 0;
+    public Integer normalNodeNum = 0;
+    public Integer backupNodeNum = 0;
+    public String[] backupRmiPaths;
 
     public MasterServiceImpl() throws RemoteException {
         //init();
@@ -56,11 +58,16 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
 
     public void distributeKeys() {
         System.out.println("key distributing");
-        if (this.nodeNum != 0) {
-            for (int i = 0; i < nodeNum; i++) {
+        if (this.normalNodeNum != 0) {
+            for (int i = 0; i < normalNodeNum; i++) {
                 try {
                     NodeService node = (NodeService) Naming.lookup(rmiPaths[i]);
                     node.init(new HashMap<String, String>());
+                    // init backup node
+                    if (i < backupNodeNum) {
+                        NodeService backupNode = (NodeService) Naming.lookup(backupRmiPaths[i]);
+                        backupNode.init(new HashMap<String, String>());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -68,11 +75,18 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
             Set<String> keySet = kvs.keySet();
             for (String key : keySet) {
                 String value = kvs.get(key).toString();
-                Integer index = key.hashCode() % nodeNum;
+                Integer index = key.hashCode() % normalNodeNum;
                 try {
-                    System.out.println(rmiPaths[index]);
+                    System.out.println("["+key+","+value+"]"+rmiPaths[index]);
                     NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
                     node.putData(key, value);
+
+                    // put data to backup node
+                    if (index < backupNodeNum) {
+                        System.out.println("["+key+","+value+"]"+backupRmiPaths[index]);
+                        NodeService backupNode = (NodeService) Naming.lookup(backupRmiPaths[index]);
+                        backupNode.putData(key, value);
+                    }
                 } catch (NotBoundException e) {
                     e.printStackTrace();
                 } catch (RemoteException e) {
@@ -87,16 +101,28 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
     public void PUT(String key, String value) throws RemoteException {
         System.out.println("Put: " + key + ", " + value);
         kvs.put(key, value);
-        Integer index = key.hashCode() % nodeNum;
+        Integer index = key.hashCode() % normalNodeNum;
         try {
             NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
             node.putData(key, value);
-        } catch (NotBoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            if (index < backupNodeNum) {
+                // this node has backup
+                rmiPaths[index] = backupRmiPaths[index];
+                PUT(key, value);
+            }
+            return;
+
+        }
+        // also update backup node
+        if (index < backupNodeNum) {
+            try {
+                NodeService node = (NodeService) Naming.lookup(backupRmiPaths[index]);
+                node.putData(key, value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         System.out.println(kvs);
@@ -105,16 +131,18 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
     public String READ(String key) throws RemoteException {
         System.out.println("Read: " + key);
         String result = null;
-        Integer index = key.hashCode() % nodeNum;
+        Integer index = key.hashCode() % normalNodeNum;
         try {
             NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
             result =  node.getData(key);
-        } catch (NotBoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            if (index < backupNodeNum) {
+                // this node has backup
+                rmiPaths[index] = backupRmiPaths[index];
+                return READ(key);
+            }
+
         }
         return result;
     }
@@ -122,16 +150,28 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
     public void DELETE(String key) throws RemoteException {
         System.out.println("Delete: " + key);
         kvs.remove(key);
-        Integer index = key.hashCode() % nodeNum;
+        Integer index = key.hashCode() % normalNodeNum;
         try {
             NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
             node.deleteData(key);
-        } catch (NotBoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            if (index < backupNodeNum) {
+                // this node has backup
+                rmiPaths[index] = backupRmiPaths[index];
+                DELETE(key);
+                return;
+            }
+
+        }
+        // also update backup node
+        if (index < backupNodeNum) {
+            try {
+                NodeService node = (NodeService) Naming.lookup(backupRmiPaths[index]);
+                node.deleteData(key);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

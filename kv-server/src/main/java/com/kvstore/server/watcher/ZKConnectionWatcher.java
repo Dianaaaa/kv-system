@@ -19,7 +19,7 @@ public class ZKConnectionWatcher implements Watcher {
 
     public void initValue() {
         try {
-            zooKeeper = new ZooKeeper("172.20.10.2:2181", 500, this);
+            zooKeeper = new ZooKeeper("172.20.10.4:2181", 500, this);
             countDownLatch.await();
 
             zooKeeper.setData("/config/nodeNum", "0".getBytes(), -1);
@@ -49,7 +49,7 @@ public class ZKConnectionWatcher implements Watcher {
     }
 
     public void masterInit() {
-        this.master.nodeNum = this.nodeNum;
+        this.master.normalNodeNum = this.nodeNum;
         this.master.rmiPaths = this.rmiPaths;
         try {
             this.master.init();
@@ -77,14 +77,36 @@ public class ZKConnectionWatcher implements Watcher {
                 this.nodeNum = Integer.valueOf(new String(nodeNum)).intValue();
                 String nodeServer = new String(zooKeeper.getData("/config/nodeService", true, null));
                 rmiPaths = nodeServer.split(" ");
+
                 System.out.println("nodeNum: "+ this.nodeNum);
                 System.out.println("rmiPaths: ");
                 for(int i=0;i<this.rmiPaths.length;i++)
                 {
                     System.out.println(this.rmiPaths[i]);
                 }
-                this.master.nodeNum = this.nodeNum;
-                this.master.rmiPaths = this.rmiPaths;
+                //this.master.nodeNum = this.nodeNum;
+                if (this.nodeNum <= 2) {
+                    this.master.rmiPaths = this.rmiPaths;
+                    this.master.normalNodeNum = this.nodeNum;
+                    this.master.backupNodeNum = 0;
+                } else {
+                    Integer backupNodeNum = this.nodeNum / 2;
+                    Integer normalNodeNum = this.nodeNum - backupNodeNum;
+                    this.master.normalNodeNum = normalNodeNum;
+                    this.master.backupNodeNum = backupNodeNum;
+
+                    this.master.rmiPaths = new String[normalNodeNum];
+                    this.master.backupRmiPaths = new String[backupNodeNum];
+                    for (int i = 0; i < this.rmiPaths.length; i++) {
+                        if (i < normalNodeNum) {
+                            this.master.rmiPaths[i] = rmiPaths[i];
+                        } else {
+                            this.master.backupRmiPaths[i-normalNodeNum] = rmiPaths[i];
+                        }
+                    }
+
+                }
+
                 this.master.distributeKeys();
             }
 

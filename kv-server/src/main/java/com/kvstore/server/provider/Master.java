@@ -31,7 +31,7 @@ public class Master {
 
             System.out.println("======= master启动RMI服务成功! =======");
 
-            zooKeeper = new ZooKeeper("172.20.10.2:2181", 500, new ZKConnectionWatcher((MasterServiceImpl)master));
+            zooKeeper = new ZooKeeper("172.20.10.4:2181", 500, new ZKConnectionWatcher((MasterServiceImpl)master));
             countDownLatch.await();
             System.out.println(zooKeeper.getSessionId());
 
