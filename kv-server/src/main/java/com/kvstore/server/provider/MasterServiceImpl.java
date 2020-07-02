@@ -14,16 +14,20 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class MasterServiceImpl extends UnicastRemoteObject implements MasterService {
 
     Map kvs;
+    public String[] rmiPaths;
+    public Integer nodeNum = 0;
 
     public MasterServiceImpl() throws RemoteException {
-        init();
+        //init();
     }
 
     public void init() throws RemoteException {
+        System.out.println("Master init");
         kvs = new HashMap<String, String>();
         File file = new File("src/main/resources/data.txt");
         if(!file.exists()){
@@ -37,17 +41,55 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
                 String[] lineSplit=line.split(" ");
                 kvs.put(lineSplit[0], lineSplit[1]);
             }
+
+//            if (this.nodeNum != 0) {
+//                Set<String> keySet = kvs.keySet();
+//                for (String) {
+//
+//                }
+//            }
         } catch (java.io.FileNotFoundException e) {
             e.printStackTrace();
         }
 
     }
 
+    public void distributeKeys() {
+        System.out.println("key distributing");
+        if (this.nodeNum != 0) {
+            for (int i = 0; i < nodeNum; i++) {
+                try {
+                    NodeService node = (NodeService) Naming.lookup(rmiPaths[i]);
+                    node.init(new HashMap<String, String>());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            Set<String> keySet = kvs.keySet();
+            for (String key : keySet) {
+                String value = kvs.get(key).toString();
+                Integer index = key.hashCode() % nodeNum;
+                try {
+                    System.out.println(rmiPaths[index]);
+                    NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
+                    node.putData(key, value);
+                } catch (NotBoundException e) {
+                    e.printStackTrace();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public void PUT(String key, String value) throws RemoteException {
         System.out.println("Put: " + key + ", " + value);
         kvs.put(key, value);
+        Integer index = key.hashCode() % nodeNum;
         try {
-            NodeService node = (NodeService) Naming.lookup("rmi://localhost:1099/kvNode");
+            NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
             node.putData(key, value);
         } catch (NotBoundException e) {
             e.printStackTrace();
@@ -63,8 +105,9 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
     public String READ(String key) throws RemoteException {
         System.out.println("Read: " + key);
         String result = null;
+        Integer index = key.hashCode() % nodeNum;
         try {
-            NodeService node = (NodeService) Naming.lookup("rmi://localhost:1099/kvNode");
+            NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
             result =  node.getData(key);
         } catch (NotBoundException e) {
             e.printStackTrace();
@@ -78,9 +121,10 @@ public class MasterServiceImpl extends UnicastRemoteObject implements MasterServ
 
     public void DELETE(String key) throws RemoteException {
         System.out.println("Delete: " + key);
-        //kvs.remove(key);
+        kvs.remove(key);
+        Integer index = key.hashCode() % nodeNum;
         try {
-            NodeService node = (NodeService) Naming.lookup("rmi://localhost:1099/kvNode");
+            NodeService node = (NodeService) Naming.lookup(rmiPaths[index]);
             node.deleteData(key);
         } catch (NotBoundException e) {
             e.printStackTrace();

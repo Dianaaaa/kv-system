@@ -1,25 +1,22 @@
 package com.kvstore.server.provider;
 
 import com.kvstore.server.MasterService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.kvstore.server.watcher.ZKConnectionWatcher;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.Stat;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+
+import static com.kvstore.server.watcher.ZKConnectionWatcher.countDownLatch;
 
 public class Master {
-
-    public void persistent() {
-
-    }
+    static ZooKeeper zooKeeper;
 
     public static void main(String[] args) {
 
@@ -33,12 +30,21 @@ public class Master {
             Naming.bind("rmi://localhost:1100/kvMaster", master);
 
             System.out.println("======= master启动RMI服务成功! =======");
+
+            zooKeeper = new ZooKeeper("172.20.10.2:2181", 500, new ZKConnectionWatcher((MasterServiceImpl)master));
+            countDownLatch.await();
+            System.out.println(zooKeeper.getSessionId());
+
             System.in.read();
+
+            zooKeeper.close();
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AlreadyBoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
